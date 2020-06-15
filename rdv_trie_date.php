@@ -1,3 +1,10 @@
+<?PHP
+require "../../core/rdvC.php";
+$rdv1C=new RdvC();
+$listeRdv=$rdv1C->trieRdv();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +56,7 @@
 
 
     <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block" >
+        <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
                     <img src="images/icon/logo.jpg" alt="JI-Line" />
@@ -59,9 +66,9 @@
 			</br>
 			</br>
             <div class="menu-sidebar__content js-scrollbar1" >
-                <nav class="navbar-sidebar" >
-                    <ul class="list-unstyled navbar__list" >
-
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+					
 					   <li><a href="index.html"> <i class="far fa-check-square"></i>  Home </a></li>
 						
 						<li>
@@ -110,8 +117,8 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="has-sub" >
-                            <a class="js-arrow" href="#" >
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
 							<i class="fas fa-desktop" ></i>Gestion apres vente</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
@@ -305,88 +312,118 @@
             </header>
             <!-- END HEADER DESKTOP-->
 <!-- Page Header-->
-	
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">RendezVous</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+              <li class="breadcrumb-item active">RendezVous</li>
+            </ul>
+			<form class="form-inline" method="POST" action="searchRdv.php">
 			
-    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
-		<div class="container-fluid">
-<div class="card " style="width: rem;">
- <div class="card-header">
- <div class="inner-sec-shop px-lg-4 px-3">
-			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3"><a href="index.php">home</a></h3>
-			 
-	</div>
-<div class="card-body mb-3" style="max-width: 54rem;">
+    <input class="form-control mr-sm-2" type="date" placeholder="Search" aria-label="Search" name="search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>
+	</form>
+	<p></p>
+	<div class="btn-group" style="width: 11%;">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Trie
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="rdv_trie_date.php">Date</a>
+	<a class="dropdown-item" href="rdv_trie_time.php">Time</a>
+
+	
+    <div class="dropdown-divider"></div>
+    
+  </div>
+</div>
   
-	
-	<center>
-<h4 class="sent-notification"></h4>
-  <form id="myForm">
-  <h2>Send an Email</h2>
-
-  <label>Name</label>
-  <input id="name" type="text" placeholder="Enter Name">
-  <br><br>
-  <label>Email</label>
-  <input id="email" type="text" placeholder="Enter Email">
-  <br><br>
-  <label>Subject</label>
-  <input id="subject" type="text" placeholder=" Enter Subject"> 
-  <br><br>
-  <p>Message</p>
-  <textarea id="body" rows="5" cols="150" placeholder="Type Message"></textarea>
-  <br><br>
-    <div><button type="submit" name="Submit" class="btn btn-primary submit mb-3" onclick="sendEmail()" style="float: left; background-color:#F25613">Submit</button></div>
-
-
-  </form>
-</center>
-</div>
-</div>
 			
-</div>
-		</div>
-	</section>
+            <div class="card bg-light mb-3" style="width: 100%;">
+		<!-- Example single danger button -->
 
+   <a href="ajouterRdv.php">rendez vous</a>
+  <div class="card-body">
+ 
+   <table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th scope="col" class="bg-primary">Id</th>
+      <th scope="col" class="bg-primary">Date</th>
+      <th scope="col" class="bg-primary">Time</th>
+      <th scope="col" class="bg-primary">Product.Ref</th>
+	  
+	  <th scope="col" class="bg-primary">Confirmed</th>
+	  <th scope="col" class="bg-primary">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+<?php foreach($listeRdv as $Rdv): ?>
+    <tr>
+	  <td> <?= $Rdv->id_rdv; ?> </td>
+      <td> <?= $Rdv->date_rdv; ?> </td>
+	  <td> <?= $Rdv->time_rdv; ?></td>
+      <td> <?= $Rdv->refProduit_rdv; ?> </td>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script type="text/javascript">
-  function sendEmail(){
-    var name = $("#name");
-    var email = $("#email");
-    var subject = $("#subject");
-    var body = $("#body");
-
-    if(isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)){
-      $.ajax({
-        url: 'sendEmail.php',
-        method: 'POST',
-        dataType: 'json',
-        data:{
-          name: name.val(),
-          email: email.val(),
-          subject: subject.val(),
-          body: body.val()
-        }, success: function(response){
-          $('#myForm')[0].reset();
-          $('.sent-notification').text("Message sent successfully.");
-        }
-      });
-    }
-  }
-  function isNotEmpty(caller){
-    if(caller.val() == ""){
-      caller.css('border','1px solid red');
-      return false;
-    }
-    else
-    {
-      caller.css('border', '');
-      return true;
-    }
-  }
-</script>
+	  <td> <?php if ($Rdv->etat==1) {echo "Yes";} else {echo "No";} ?> </td>
+	  
+	  
+      <td>
+              <a  href="email.php?idR=<?= $Rdv->id_rdv ?>" class="	fa fa-envelope" aria-hidden="true" style="font-size:36px"></a>
+			  <a> </a>
+			  <a> </a>
+			  <a> </a>
+			  <a> </a>
+			  <a> </a>
+			  <a  href="deleteRdv.php?idR=<?= $Rdv->id_rdv ?>" class="	fa fa-trash" aria-hidden="true" style="color:red ; font-size:36px" ></a>
+			  
+			  
+      </td>
+    
+    </tr>
+  </tbody>
+            <?php endforeach; ?>
 </table>
+  </div>
+</div>
+
+          </div>
+		  	   <script>
+window.onload = function () {
+ 
+var chart = new CanvasJS.Chart("chartContainer", {
+  animationEnabled: true,
+  exportEnabled: true,
+  theme: "light2", // "light1", "light2", "dark1", "dark2"
+  title:{
+    text: "Today's RendezVous"
+  },
+  data: [{
+    type: "column", 
+    legendText: "{label}",
+    indexLabelFontSize: 16,
+    indexLabelFontColor: "#5A5757",
+    indexLabelPlacement: "outside",   
+    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+  }]
+});
+chart.render();
+ 
+}
+</script>
+
+                              </div>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                              </div>
+                            </div>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>

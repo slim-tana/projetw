@@ -1,3 +1,22 @@
+<?PHP
+include "../../entities/reclamation.php";
+include "../../core/reclamationC.php";
+
+if (isset($_POST['id']) and isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['type_rec'])  and isset($_POST['ref']) and isset($_POST['message']) and isset($_POST['date_rec']))
+{
+    $id=$_POST['id'];
+    $nom=$_POST['nom'];
+    $prenom=$_POST['prenom'];
+    $type_rec=$_POST['type_rec'];    
+    $ref=$_POST['ref'];
+    $message=$_POST['message'];
+    $date_rec=$_POST['date_rec'];
+    $reclamationvar = new reclamation($id,$nom,$prenom,$type_rec,$ref,$message,$date_rec);
+    $reclamationCvar= new reclamationC() ;
+    $reclamationCvar->ajouterReclamation($reclamationvar);
+    header('Location: afficherReclamation.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +30,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-	<title>JI-LINE - Admin</title>
+	<title>JI-LINE - Reclamation</title>
     <!-- Google fonts - Poppins -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
     <!-- theme stylesheet-->
@@ -114,10 +133,10 @@
                             <a class="js-arrow" href="#" >
 							<i class="fas fa-desktop" ></i>Gestion apres vente</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
+                                <li class="active">
                                     <a href="afficherReclamation.php">Listes des Reclamations</a>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <a href="afficherRdv.php">Listes des Rendez vous</a>
                                 </li>
                                 
@@ -304,89 +323,60 @@
                 </div>
             </header>
             <!-- END HEADER DESKTOP-->
-<!-- Page Header-->
-	
-			
-    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+
+  <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
 		<div class="container-fluid">
 <div class="card " style="width: rem;">
  <div class="card-header">
  <div class="inner-sec-shop px-lg-4 px-3">
-			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3"><a href="index.php">home</a></h3>
-			 
+			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3">Reclamation</h3>
 	</div>
+
 <div class="card-body mb-3" style="max-width: 54rem;">
-  
-	
-	<center>
-<h4 class="sent-notification"></h4>
-  <form id="myForm">
-  <h2>Send an Email</h2>
-
-  <label>Name</label>
-  <input id="name" type="text" placeholder="Enter Name">
-  <br><br>
-  <label>Email</label>
-  <input id="email" type="text" placeholder="Enter Email">
-  <br><br>
-  <label>Subject</label>
-  <input id="subject" type="text" placeholder=" Enter Subject"> 
-  <br><br>
-  <p>Message</p>
-  <textarea id="body" rows="5" cols="150" placeholder="Type Message"></textarea>
-  <br><br>
-    <div><button type="submit" name="Submit" class="btn btn-primary submit mb-3" onclick="sendEmail()" style="float: left; background-color:#F25613">Submit</button></div>
-
-
-  </form>
-</center>
-</div>
-</div>
-			
-</div>
-		</div>
-	</section>
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script type="text/javascript">
-  function sendEmail(){
-    var name = $("#name");
-    var email = $("#email");
-    var subject = $("#subject");
-    var body = $("#body");
-
-    if(isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)){
-      $.ajax({
-        url: 'sendEmail.php',
-        method: 'POST',
-        dataType: 'json',
-        data:{
-          name: name.val(),
-          email: email.val(),
-          subject: subject.val(),
-          body: body.val()
-        }, success: function(response){
-          $('#myForm')[0].reset();
-          $('.sent-notification').text("Message sent successfully.");
-        }
-      });
-    }
-  }
-  function isNotEmpty(caller){
-    if(caller.val() == ""){
-      caller.css('border','1px solid red');
-      return false;
-    }
-    else
-    {
-      caller.css('border', '');
-      return true;
-    }
-  }
-</script>
-</table>
+            <form class="forms-sample" id="addReclamation" method="post"  enctype="multipart/form-data">
+            <div class="form-group">
+                  <label for="exampleInputEmail3">id_Reclamation</label>
+                  <input type="text" required class="form-control" name="id" id="id" placeholder="id reclamation">
+              </div>
+            <div class="form-group">
+            <label for="exampleInputEmail3">Nom</label>
+            <input type="text" required class="form-control" name="nom" id="nom" placeholder="nom reclamation">
+            </div>  
+            <div class="form-group">
+            <label for="exampleInputEmail3">Prenom</label>
+            <input type="text" required class="form-control" name="prenom" id="prenom" placeholder="prenom reclamation">
+            </div> 	
+            <div class="form-group">
+            <label for="exampleInputEmail3">Type_rec</label>
+			<select name="type_rec" id="type_rec" required class="form-control" >
+				<option value="service" >service</option>
+				<option value="commande">commande</option>
+				<option value="echange">echange</option>
+			</select>
+            </div> 			  
+            <div class="form-group">
+            <label for="exampleInputEmail3">Ref</label>
+            <input type="text" required class="form-control" name="ref" id="ref" placeholder="ref">
+            </div> 
+		
+            <div class="form-group">
+            <label for="exampleInputEmail3">Message</label>
+            <textarea rows="4" cols="8" required class="form-control" name="message" id="message" placeholder="message"></textarea>
+            </div> 				  
+              <div class="form-group">
+                  <label for="exampleInputEmail3">Date_rec</label>
+                  <input type="date" required class="form-control" name="date_rec" id="date_rec" placeholder="Date_rec">
+              </div>
+				<button  class="btn btn-primary mr-2" onclick=" testAjouReclamation()" >Submit</button>
+                <button class="btn btn-light">Cancel</button>
+                </form>
+			</div>
+			</div>
+                                               </div>
+                                           </div>
+                                       </section>
+ 
+                
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -416,3 +406,6 @@
 
 </html>
 <!-- end document-->
+
+
+

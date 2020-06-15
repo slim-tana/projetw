@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +42,37 @@
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
+<script language="javascript" >
+function verifad()
+{
+if (f.id.value=="" || f.mdp.value=="" )
+{
+alert ("check ID or Password");
+return false;
+}
+else if (isNaN(f.cin.value)) 
+{
+alert ("Cin must be numbers only ");
+return false;
+}
+else if (f.cin.value.length()<8)
+{
+alert ("Cin must be 8 numbers ");
+return false;
+}
+else if (isNaN(f.tel.value)) 
+{
+alert ("Phone must be numbers only ");
+return false;
+}
 
+}
+
+
+
+
+
+</script>
 </head>
 
 <body class="animsition">
@@ -49,7 +80,7 @@
 
 
     <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block" >
+        <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
                     <img src="images/icon/logo.jpg" alt="JI-Line" />
@@ -59,13 +90,15 @@
 			</br>
 			</br>
             <div class="menu-sidebar__content js-scrollbar1" >
-                <nav class="navbar-sidebar" >
-                    <ul class="list-unstyled navbar__list" >
-
-					   <li><a href="index.html"> <i class="far fa-check-square"></i>  Home </a></li>
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        <li>
+                            <a href="chart.html">
+                                <i class="fas fa-chart-bar"></i>Charts</a>
+                        </li>
 						
 						<li>
-						<li><a href="admin_v.php"><i class="fas fa-desktop" class="icon-interface-windows"></i> Admin </a></li>
+						<li class="active"><a href="admin_v.php"><i class="fas fa-desktop" class="icon-interface-windows"></i> Admin </a></li>
 						</li>
 
                         <li>
@@ -110,14 +143,14 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="has-sub" >
-                            <a class="js-arrow" href="#" >
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
 							<i class="fas fa-desktop" ></i>Gestion apres vente</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="afficherReclamation.php">Listes des Reclamations</a>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <a href="afficherRdv.php">Listes des Rendez vous</a>
                                 </li>
                                 
@@ -303,90 +336,59 @@
                     </div>
                 </div>
             </header>
-            <!-- END HEADER DESKTOP-->
-<!-- Page Header-->
-	
-			
-    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
-		<div class="container-fluid">
-<div class="card " style="width: rem;">
- <div class="card-header">
- <div class="inner-sec-shop px-lg-4 px-3">
-			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3"><a href="index.php">home</a></h3>
-			 
-	</div>
-<div class="card-body mb-3" style="max-width: 54rem;">
-  
-	
-	<center>
-<h4 class="sent-notification"></h4>
-  <form id="myForm">
-  <h2>Send an Email</h2>
-
-  <label>Name</label>
-  <input id="name" type="text" placeholder="Enter Name">
-  <br><br>
-  <label>Email</label>
-  <input id="email" type="text" placeholder="Enter Email">
-  <br><br>
-  <label>Subject</label>
-  <input id="subject" type="text" placeholder=" Enter Subject"> 
-  <br><br>
-  <p>Message</p>
-  <textarea id="body" rows="5" cols="150" placeholder="Type Message"></textarea>
-  <br><br>
-    <div><button type="submit" name="Submit" class="btn btn-primary submit mb-3" onclick="sendEmail()" style="float: left; background-color:#F25613">Submit</button></div>
-
-
-  </form>
-</center>
+              
+    <div class="card" style="width: 70rem;">
+    <div class="card-header">
+	<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"><a class="navbar-brand" href="">    Ajouter</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      
+    </ul>
+  </div>
+</nav>         
+     
 </div>
+
+     
 </div>
-			
+  <div class="card-body">
+ <form name="f" method="POST" action="../../core/ajoutadmin.php">
+  <div class="form-group">
+    <label for="formGroupExampleInput3">Nom Utilisateur</label>
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="reference categorie produit" name="id">
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput4">Mot De pass</label>
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="nom categorie" name="mdp">
+  </div>
+
+  <div class="form-group">
+    <label for="formGroupExampleInput4">Numero Telephone</label>
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="nom categorie" name="tel">
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput4">Cin</label>
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="nom categorie" name="cin">
+  </div>
+<button type="submit" class="btn btn-primary" onclick="return verifad()" >Ajouter</button>
+</form>
+  </div>
 </div>
-		</div>
-	</section>
+          </div>
+          <!-- Page Footer-->
+           <!-- END HEADER DESKTOP-->
 
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    
+                            
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script type="text/javascript">
-  function sendEmail(){
-    var name = $("#name");
-    var email = $("#email");
-    var subject = $("#subject");
-    var body = $("#body");
-
-    if(isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)){
-      $.ajax({
-        url: 'sendEmail.php',
-        method: 'POST',
-        dataType: 'json',
-        data:{
-          name: name.val(),
-          email: email.val(),
-          subject: subject.val(),
-          body: body.val()
-        }, success: function(response){
-          $('#myForm')[0].reset();
-          $('.sent-notification').text("Message sent successfully.");
-        }
-      });
-    }
-  }
-  function isNotEmpty(caller){
-    if(caller.val() == ""){
-      caller.css('border','1px solid red');
-      return false;
-    }
-    else
-    {
-      caller.css('border', '');
-      return true;
-    }
-  }
-</script>
-</table>
+                          </div>
+                              </div>
+                            </div>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>

@@ -114,10 +114,10 @@
                             <a class="js-arrow" href="#" >
 							<i class="fas fa-desktop" ></i>Gestion apres vente</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
+                                <li class="active">
                                     <a href="afficherReclamation.php">Listes des Reclamations</a>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <a href="afficherRdv.php">Listes des Rendez vous</a>
                                 </li>
                                 
@@ -304,89 +304,93 @@
                 </div>
             </header>
             <!-- END HEADER DESKTOP-->
-<!-- Page Header-->
-	
-			
-    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+
+<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
 		<div class="container-fluid">
 <div class="card " style="width: rem;">
  <div class="card-header">
  <div class="inner-sec-shop px-lg-4 px-3">
-			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3"><a href="index.php">home</a></h3>
-			 
+			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3">Reclamation</h3>
 	</div>
-<div class="card-body mb-3" style="max-width: 54rem;">
-  
-	
-	<center>
-<h4 class="sent-notification"></h4>
-  <form id="myForm">
-  <h2>Send an Email</h2>
+<div class="card-body mb-3" style="max-width: 54rem;">	
+<form method="POST" action="">
+<table>
+<tr>
+<td>Id</td>
+<td><input type="number" name="id" required 
+class="form-control" name="id"  placeholder="id"></td>
+</tr>
+<tr>
+<td>Nom</td>
+<td><input type="text" name="nom" required 
+	class="form-control" name="nom"  placeholder="nom reclamation"></td>
+</tr>
+<tr>
+<td>Prenom</td>
+<td><input type="text" name="prenom" required 
+	class="form-control" name="prenom"  placeholder="prenom reclamation"></td>
+</tr>
+<tr>            
+<tr>
+<td><label for="exampleInputEmail3">Type</label></td>
+<td><select name="type" id="type" required class="form-control" >
+	<option value="service" >service</option>
+	<option value="commande">commande</option>
+	<option value="echange">echange</option>
+	</select>
+</td>
+</tr>
+<tr>
+<tr>
+<td>ref</td>
+<td><input type="number" name="ref" required 
+			class="form-control" name="ref"  placeholder="ref"></td>
+</tr>
+<tr>
+<td>message</td>
+<td><input type="text" name="message" required 
+			class="form-control" name="message"  placeholder="message">
+</td>
+</tr>
+<tr>
+<td>date</td>
+<td><input type="date" name="date" required class="form-control" placeholder="Date_rec"></td>
+</tr>
+<tr>
+<td></td>
+<td>
+ <div><button type="submit" name="modifier" class="btn btn-primary submit mb-3" style="float: left; background-color:#F25613">modifier</button></div>
+</tr>
+<tr>
+<td></td>
 
-  <label>Name</label>
-  <input id="name" type="text" placeholder="Enter Name">
-  <br><br>
-  <label>Email</label>
-  <input id="email" type="text" placeholder="Enter Email">
-  <br><br>
-  <label>Subject</label>
-  <input id="subject" type="text" placeholder=" Enter Subject"> 
-  <br><br>
-  <p>Message</p>
-  <textarea id="body" rows="5" cols="150" placeholder="Type Message"></textarea>
-  <br><br>
-    <div><button type="submit" name="Submit" class="btn btn-primary submit mb-3" onclick="sendEmail()" style="float: left; background-color:#F25613">Submit</button></div>
-
-
-  </form>
-</center>
-</div>
-</div>
-			
-</div>
-		</div>
-	</section>
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script type="text/javascript">
-  function sendEmail(){
-    var name = $("#name");
-    var email = $("#email");
-    var subject = $("#subject");
-    var body = $("#body");
-
-    if(isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)){
-      $.ajax({
-        url: 'sendEmail.php',
-        method: 'POST',
-        dataType: 'json',
-        data:{
-          name: name.val(),
-          email: email.val(),
-          subject: subject.val(),
-          body: body.val()
-        }, success: function(response){
-          $('#myForm')[0].reset();
-          $('.sent-notification').text("Message sent successfully.");
-        }
-      });
-    }
-  }
-  function isNotEmpty(caller){
-    if(caller.val() == ""){
-      caller.css('border','1px solid red');
-      return false;
-    }
-    else
-    {
-      caller.css('border', '');
-      return true;
-    }
-  }
-</script>
 </table>
+</form>
+			</div>
+			</div>
+                                               </div>
+                                           </div>
+                                       </section>
+
+<?PHP
+include "../../entities/reclamation.php";
+include "../../core/reclamationC.php";
+if (isset($_POST['modifier'])){
+	$reclamationC= new reclamationC() ;
+	$reclamation=new reclamation($_POST['id'],$_POST['nom'],$_POST['prenom'],$_POST['type'],$_POST['ref'],$_POST['message'],$_POST['date']);
+	$reclamationC->modifierreclamation($reclamation,$_POST['id']);
+	
+	
+}
+?>
+
+			</div>
+			</div>
+                                               </div>
+                                           </div>
+                                       </section>
+ 
+                
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>

@@ -1,3 +1,9 @@
+<?PHP 
+include "../../core/reclamationC.php";
+$reclamationCvar =new reclamationC();
+$listeReclamations=$reclamationCvar->recupererReclamation($_POST ['id']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +17,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-	<title>JI-LINE - Admin</title>
+	<title>JI-LINE - Reclamation</title>
     <!-- Google fonts - Poppins -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
     <!-- theme stylesheet-->
@@ -114,10 +120,10 @@
                             <a class="js-arrow" href="#" >
 							<i class="fas fa-desktop" ></i>Gestion apres vente</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
+                                <li class="active">
                                     <a href="afficherReclamation.php">Listes des Reclamations</a>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <a href="afficherRdv.php">Listes des Rendez vous</a>
                                 </li>
                                 
@@ -305,88 +311,128 @@
             </header>
             <!-- END HEADER DESKTOP-->
 <!-- Page Header-->
-	
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Reclamation</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+              <li class="breadcrumb-item active">Reclamation</li>
+            </ul>
+			<form class="form-inline" method="POST" action="rechercher.php">
 			
-    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
-		<div class="container-fluid">
-<div class="card " style="width: rem;">
- <div class="card-header">
- <div class="inner-sec-shop px-lg-4 px-3">
-			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3"><a href="index.php">home</a></h3>
-			 
+    <input class="form-control mr-sm-2" type="text" placeholder="Search Id" aria-label="Search" name="id">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>
+	
+	</form>
+	<p></p>
+	<div class="btn-group" style="width: 11%;">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Trie
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="trie.php">Date</a>
+	<a class="dropdown-item" href="trie1.php">ref</a>
+
+	
+    <div class="dropdown-divider"></div>
+    
 	</div>
-<div class="card-body mb-3" style="max-width: 54rem;">
+</div>
   
-	
-	<center>
-<h4 class="sent-notification"></h4>
-  <form id="myForm">
-  <h2>Send an Email</h2>
-
-  <label>Name</label>
-  <input id="name" type="text" placeholder="Enter Name">
-  <br><br>
-  <label>Email</label>
-  <input id="email" type="text" placeholder="Enter Email">
-  <br><br>
-  <label>Subject</label>
-  <input id="subject" type="text" placeholder=" Enter Subject"> 
-  <br><br>
-  <p>Message</p>
-  <textarea id="body" rows="5" cols="150" placeholder="Type Message"></textarea>
-  <br><br>
-    <div><button type="submit" name="Submit" class="btn btn-primary submit mb-3" onclick="sendEmail()" style="float: left; background-color:#F25613">Submit</button></div>
-
-
-  </form>
-</center>
-</div>
-</div>
 			
-</div>
-		</div>
-	</section>
+            <div class="card bg-light mb-3" style="width: 100%;">
+		<!-- Example single danger button -->
+
+     <a href="ajouterReclamation.php">Reclamation</a>
+  <div class="card-body">
+ 
+   <table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th scope="col" class="bg-primary">Id</th>
+      <th scope="col" class="bg-primary">NOM</th>
+      <th scope="col" class="bg-primary">PRENOM</th>
+      <th scope="col" class="bg-primary">TYPE</th>
+	  
+	  <th scope="col" class="bg-primary">REF</th>
+	  <th scope="col" class="bg-primary">MESSAGE</th>
+	  <th scope="col" class="bg-primary">DATE</th>
+	  <th scope="col" class="bg-primary">SUPPRIMER</th>
+	  <th scope="col" class="bg-primary">MODIFIER</th>
+    </tr>
+  </thead>
+  <tbody>
 
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+										<?PHP
+										foreach($listeReclamations as $row){
+										?>
+										<tr>
+										<td><?PHP echo $row['id']; ?></td>
+										<td><?PHP echo $row['nom']; ?></td>
+										<td><?PHP echo $row['prenom']; ?></td>
+										<td><?PHP echo $row['type_rec']; ?></td>	
+										<td><?PHP echo $row['ref']; ?></td>
+										<td><?PHP echo $row['message']; ?></td>
+										<td><?PHP echo $row['date_rec']; ?></td>
+										<td><form method="POST" action="supprimerReclamation.php">
+										<input  type="submit" name="supprimer" value="supprimer">
+										<input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
+										</form>
+										</td>
+										<td><form method="post" action="modifierReclamation.php">
+										<input  type="submit" name="modifier" value="modifier">
+										<input type="hidden" value="<?PHP echo $row['id']; ?>" name="id"></td>
+										  <a  href="email.php?idR=<?= $Rdv->id_rdv ?>" class="	fa fa-thumbs-o-up" style="font-size:36px"></a>
+			  <a> </a>
+										
+										</form>
+										</td>		
 
-<script type="text/javascript">
-  function sendEmail(){
-    var name = $("#name");
-    var email = $("#email");
-    var subject = $("#subject");
-    var body = $("#body");
+										
 
-    if(isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)){
-      $.ajax({
-        url: 'sendEmail.php',
-        method: 'POST',
-        dataType: 'json',
-        data:{
-          name: name.val(),
-          email: email.val(),
-          subject: subject.val(),
-          body: body.val()
-        }, success: function(response){
-          $('#myForm')[0].reset();
-          $('.sent-notification').text("Message sent successfully.");
-        }
-      });
-    }
-  }
-  function isNotEmpty(caller){
-    if(caller.val() == ""){
-      caller.css('border','1px solid red');
-      return false;
-    }
-    else
-    {
-      caller.css('border', '');
-      return true;
-    }
-  }
+										<?PHP
+										}
+										?>
+
+                                    
+
+   <script>
+window.onload = function () {
+ 
+var chart = new CanvasJS.Chart("chartContainer", {
+  animationEnabled: true,
+  exportEnabled: true,
+  theme: "light2", // "light1", "light2", "dark1", "dark2"
+  title:{
+    text: "Today's RendezVous"
+  },
+  data: [{
+    type: "column", 
+    legendText: "{label}",
+    indexLabelFontSize: 16,
+    indexLabelFontColor: "#5A5757",
+    indexLabelPlacement: "outside",   
+    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+  }]
+});
+chart.render();
+ 
+}
 </script>
-</table>
+
+                               
+                              </div>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                              </div>
+                            </div>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -416,3 +462,8 @@
 
 </html>
 <!-- end document-->
+
+
+
+
+

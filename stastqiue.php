@@ -1,3 +1,10 @@
+<?PHP 
+include "../../core/rdvC.php";
+$rdvCvar =new rdvC();
+$listeRdvs=$rdvCvar->clacule();
+$listeRdv=$rdvCvar->calcule1();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -305,90 +312,61 @@
             </header>
             <!-- END HEADER DESKTOP-->
 <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">RendezVous</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+              <li class="breadcrumb-item active">RendezVous</li>
+            </ul>
 	
-			
-    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
-		<div class="container-fluid">
-<div class="card " style="width: rem;">
- <div class="card-header">
- <div class="inner-sec-shop px-lg-4 px-3">
-			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3"><a href="index.php">home</a></h3>
-			 
-	</div>
-<div class="card-body mb-3" style="max-width: 54rem;">
-  
-	
-	<center>
-<h4 class="sent-notification"></h4>
-  <form id="myForm">
-  <h2>Send an Email</h2>
+		<dir class="main">
+	<div class="card-content">
+						<h1>detaille rdv</h1>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+	  <?PHP
+foreach($listeRdvs as $row)
+foreach($listeRdv as $r)
 
-  <label>Name</label>
-  <input id="name" type="text" placeholder="Enter Name">
-  <br><br>
-  <label>Email</label>
-  <input id="email" type="text" placeholder="Enter Email">
-  <br><br>
-  <label>Subject</label>
-  <input id="subject" type="text" placeholder=" Enter Subject"> 
-  <br><br>
-  <p>Message</p>
-  <textarea id="body" rows="5" cols="150" placeholder="Type Message"></textarea>
-  <br><br>
-    <div><button type="submit" name="Submit" class="btn btn-primary submit mb-3" onclick="sendEmail()" style="float: left; background-color:#F25613">Submit</button></div>
+{
+	?>
+	<?PHP   $t = $r['sa'];
+	?>
+	<?PHP   $e = $row['sar'];?>
 
-
-  </form>
-</center>
-</div>
-</div>
-			
-</div>
-		</div>
-	</section>
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script type="text/javascript">
-  function sendEmail(){
-    var name = $("#name");
-    var email = $("#email");
-    var subject = $("#subject");
-    var body = $("#body");
-
-    if(isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)){
-      $.ajax({
-        url: 'sendEmail.php',
-        method: 'POST',
-        dataType: 'json',
-        data:{
-          name: name.val(),
-          email: email.val(),
-          subject: subject.val(),
-          body: body.val()
-        }, success: function(response){
-          $('#myForm')[0].reset();
-          $('.sent-notification').text("Message sent successfully.");
-        }
-      });
-    }
-  }
-  function isNotEmpty(caller){
-    if(caller.val() == ""){
-      caller.css('border','1px solid red');
-      return false;
-    }
-    else
-    {
-      caller.css('border', '');
-      return true;
-    }
-  }
-</script>
-</table>
-
-    <!-- Jquery JS-->
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'confrime'],
+          ['oui',   <?PHP   echo$e;
+	?>  ],
+          
+          ['non', <?PHP   echo$t;
+	?>],
+         
+        ]);
+        var options = {
+          title: 'rdv',
+          pieHole: 0.4,
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+  <body>
+    <div id="donutchart" style="width: 900px; height: 500px;"></div>
+  </body>
+  <?PHP
+}
+?>
+</html>
+ <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="vendor/bootstrap-4.1/popper.min.js"></script>

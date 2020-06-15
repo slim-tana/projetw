@@ -1,3 +1,22 @@
+<?PHP
+include "../../entities/rdv.php";
+include "../../core/rdvC.php";
+
+if (isset($_POST['dateR']) and isset($_POST['timeR']) and isset($_POST['refp'])and isset($_POST['etat']))
+{
+    $date_r=$_POST['dateR'];
+    $time_r=$_POST['timeR'];
+    $refP=$_POST['refp'];
+	$etat=$_POST['etat'];
+    $rdvvar = new rdv($date_r,$time_r,$refP,$etat);	
+    $rdvCvar= new rdvC() ;
+    $rdvCvar->ajouterRdv($rdvvar);
+	
+    header('Location: afficherRdv.php');
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -304,89 +323,43 @@
                 </div>
             </header>
             <!-- END HEADER DESKTOP-->
-<!-- Page Header-->
-	
-			
-    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+
+            <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
 		<div class="container-fluid">
 <div class="card " style="width: rem;">
  <div class="card-header">
  <div class="inner-sec-shop px-lg-4 px-3">
-			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3"><a href="index.php">home</a></h3>
-			 
+			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3">Rendezvous</h3>
 	</div>
 <div class="card-body mb-3" style="max-width: 54rem;">
-  
-	
-	<center>
-<h4 class="sent-notification"></h4>
-  <form id="myForm">
-  <h2>Send an Email</h2>
-
-  <label>Name</label>
-  <input id="name" type="text" placeholder="Enter Name">
-  <br><br>
-  <label>Email</label>
-  <input id="email" type="text" placeholder="Enter Email">
-  <br><br>
-  <label>Subject</label>
-  <input id="subject" type="text" placeholder=" Enter Subject"> 
-  <br><br>
-  <p>Message</p>
-  <textarea id="body" rows="5" cols="150" placeholder="Type Message"></textarea>
-  <br><br>
-    <div><button type="submit" name="Submit" class="btn btn-primary submit mb-3" onclick="sendEmail()" style="float: left; background-color:#F25613">Submit</button></div>
-
-
-  </form>
-</center>
+  <form method="POST"  name="f" action="">
+  <div class="">
+    <div class="col mb-3">
+	<input type="hidden" name="Id" class="form-control"  placeholder="yyyy-mm-dd" >
+     <label for="inputEmail4">Date</label>
+      <input type="date" name="dateR" class="form-control"  placeholder="yyyy-mm-dd" >
+    </div>
+    <div class="col mb-3">
+     <label for="inputEmail5">Time</label>
+      <input type="time" name="timeR" class="form-control"   placeholder="example 12h">
+    </div>
+    <div class="col mb-3">
+     <label for="inputEmail5">Product Reference</label>
+      <input type="text"  name="refp" class="form-control"  placeholder="Product Reference" >
+    </div>
+	<div class="col mb-3">
+     <label for="inputEmail5">state</label>
+      <input type="text"  name="etat" class="form-control"  placeholder="1 confirmé et 0 pas sûr" >
+    </div>
+  </div>
+  <div><button type="submit" name="add" class="btn btn-primary submit mb-3" style="float: left; background-color:#F25613">add</button></div>
+</form>
 </div>
 </div>
 			
 </div>
 		</div>
 	</section>
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script type="text/javascript">
-  function sendEmail(){
-    var name = $("#name");
-    var email = $("#email");
-    var subject = $("#subject");
-    var body = $("#body");
-
-    if(isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)){
-      $.ajax({
-        url: 'sendEmail.php',
-        method: 'POST',
-        dataType: 'json',
-        data:{
-          name: name.val(),
-          email: email.val(),
-          subject: subject.val(),
-          body: body.val()
-        }, success: function(response){
-          $('#myForm')[0].reset();
-          $('.sent-notification').text("Message sent successfully.");
-        }
-      });
-    }
-  }
-  function isNotEmpty(caller){
-    if(caller.val() == ""){
-      caller.css('border','1px solid red');
-      return false;
-    }
-    else
-    {
-      caller.css('border', '');
-      return true;
-    }
-  }
-</script>
-</table>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -416,3 +389,6 @@
 
 </html>
 <!-- end document-->
+
+
+

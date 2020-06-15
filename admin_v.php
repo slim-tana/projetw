@@ -1,3 +1,14 @@
+<?php   ?>
+<?php 
+ 
+require '../../core/adminC.php';
+$categorieC=new adminC();
+$listecategorie=$categorieC->afficheradmin();
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +76,7 @@
 					   <li><a href="index.html"> <i class="far fa-check-square"></i>  Home </a></li>
 						
 						<li>
-						<li><a href="admin_v.php"><i class="fas fa-desktop" class="icon-interface-windows"></i> Admin </a></li>
+						<li class="active"><a href="admin_v.php"><i class="fas fa-desktop" class="icon-interface-windows"></i> Admin </a></li>
 						</li>
 
                         <li>
@@ -117,7 +128,7 @@
                                 <li>
                                     <a href="afficherReclamation.php">Listes des Reclamations</a>
                                 </li>
-                                <li class="active">
+                                <li >
                                     <a href="afficherRdv.php">Listes des Rendez vous</a>
                                 </li>
                                 
@@ -255,7 +266,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="account-wrap">
+                                                                <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
                                             <img src="images/icon/jihen.jpg" alt="Jihen Gabsi" />
@@ -304,89 +315,75 @@
                 </div>
             </header>
             <!-- END HEADER DESKTOP-->
-<!-- Page Header-->
+           
+
+
+
+
+
+
+
+    
+          <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Admin</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+    
+       
+	<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"><a class="navbar-brand" href="admin_ajout.html">    Ajouter</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="card-body">
+ 
+   <table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Id Admin</th>
+      <th scope="col">Mot De Passe</th>
+       <th scope="col">Cin Admin</th>
+	    <th scope="col">Tel Admin</th>
+    </tr>
+  </thead>
+  <tbody>
+<?php foreach($listecategorie as $admin): ?>
+    <tr>
+      <td> <?= $admin->id ; ?> </td>
+	  <td> <?= $admin->mdp ; ?> </td>
+	  <td> <?= $admin->cin ; ?> </td>
+	  <td> <?= $admin->tel ; ?> </td>
+     
 	
-			
-    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
-		<div class="container-fluid">
-<div class="card " style="width: rem;">
- <div class="card-header">
- <div class="inner-sec-shop px-lg-4 px-3">
-			  <h3 class="tittle-w3layouts text-left my-lg-4 my-3"><a href="index.php">home</a></h3>
-			 
-	</div>
-<div class="card-body mb-3" style="max-width: 54rem;">
-  
-	
-	<center>
-<h4 class="sent-notification"></h4>
-  <form id="myForm">
-  <h2>Send an Email</h2>
-
-  <label>Name</label>
-  <input id="name" type="text" placeholder="Enter Name">
-  <br><br>
-  <label>Email</label>
-  <input id="email" type="text" placeholder="Enter Email">
-  <br><br>
-  <label>Subject</label>
-  <input id="subject" type="text" placeholder=" Enter Subject"> 
-  <br><br>
-  <p>Message</p>
-  <textarea id="body" rows="5" cols="150" placeholder="Type Message"></textarea>
-  <br><br>
-    <div><button type="submit" name="Submit" class="btn btn-primary submit mb-3" onclick="sendEmail()" style="float: left; background-color:#F25613">Submit</button></div>
-
-
-  </form>
-</center>
-</div>
-</div>
-			
-</div>
-		</div>
-	</section>
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script type="text/javascript">
-  function sendEmail(){
-    var name = $("#name");
-    var email = $("#email");
-    var subject = $("#subject");
-    var body = $("#body");
-
-    if(isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)){
-      $.ajax({
-        url: 'sendEmail.php',
-        method: 'POST',
-        dataType: 'json',
-        data:{
-          name: name.val(),
-          email: email.val(),
-          subject: subject.val(),
-          body: body.val()
-        }, success: function(response){
-          $('#myForm')[0].reset();
-          $('.sent-notification').text("Message sent successfully.");
-        }
-      });
-    }
-  }
-  function isNotEmpty(caller){
-    if(caller.val() == ""){
-      caller.css('border','1px solid red');
-      return false;
-    }
-    else
-    {
-      caller.css('border', '');
-      return true;
-    }
-  }
-</script>
+	      
+    </tr>
+  </tbody>
+            <?php endforeach; ?>
 </table>
+  </div>
+</div>
+
+
+         </div>
+          <!-- Page Footer-->
+           <!-- END HEADER DESKTOP-->
+
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    
+                            
+
+                          </div>
+                              </div>
+                            </div>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
