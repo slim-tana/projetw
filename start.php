@@ -1,24 +1,26 @@
 <?PHP
-include "../entities/employe.php";
-include "../core/employeC.php";
-$employe=new Employe(75757575,'BEN Ahmed','Salah',50,20);
-$employerC=new EmployeC();
-$employerC->afficherEmploye($employe);
+include "../entities/client.php";
+include "../core/clientC.php";
+$client=new Client (123,'Ben Ghozlen','Mariem','la marsa','mariembenghozlen','mariemm',99);
+$clienteC=new ClientC();
+$clienteC->afficherClient($client);
 echo "****************";
 echo "<br>";
-echo "cin:".$employe->getCin();
+echo "cin:".$client->getCin();
 echo "<br>";
-echo "nom:".$employe->getNom();
+echo "nom:".$client->getNom();
 echo "<br>";
-echo "prenom:".$employe->getPrenom();
+echo "prenom:".$client->getPrenom();
 echo "<br>";
-echo "nbH:".$employe->getNbHeures();
+echo "adresse:".$client->getAdresse();
 echo "<br>";
-echo "tarif:".$employe->getTarifHoraire();
+echo "mail:".$client->getMail();
 echo "<br>";
-echo "le salaire est : ";
-$employerC->calculerSalaire($employe); 
+echo "mot_de_passe:".$client->getMot_de_passe();
 echo "<br>";
+echo "numero:".$client->getNumero();
+echo "<br>";
+
 
 
 ?>
